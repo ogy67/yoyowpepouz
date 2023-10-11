@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "333994351124",
+    "firebase_url": "https://yoyow-e6193-default-rtdb.firebaseio.com",
+    "project_id": "yoyow-e6193",
+    "storage_bucket": "yoyow-e6193.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333994351124:android:116d529b06f2ed04aee501",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Yoyow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333994351124-vdl6ce6afdigsjr48qbbafa71ipgc71c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsK9_VHL0bX5IVyRxxG9fIMLXO3W1LiHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333994351124-vdl6ce6afdigsjr48qbbafa71ipgc71c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333994351124:android:fcb14e5befbff8d9aee501",
+        "android_client_info": {
+          "package_name": "com.DevBdd.Yoyow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333994351124-vdl6ce6afdigsjr48qbbafa71ipgc71c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsK9_VHL0bX5IVyRxxG9fIMLXO3W1LiHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333994351124-vdl6ce6afdigsjr48qbbafa71ipgc71c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
