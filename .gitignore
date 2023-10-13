@@ -74,3 +74,5 @@ crashlytics-build.properties
 # ignore ALL files in ANY directory named Library
 Library/
 Temp/
+Yoyow_TestIOS_1/
+Yoyow_TestIOS_1_BurstDebugInformation_DoNotShip/
