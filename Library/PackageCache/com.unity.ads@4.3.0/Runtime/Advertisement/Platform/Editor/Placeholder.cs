@@ -12,7 +12,7 @@ namespace UnityEngine.Advertisements
         private Texture2D m_LandscapeTexture;
         private Texture2D m_PortraitTexture;
 
-        private GameObject m_LandscapeCanvas;
+        //private GameObject m_LandscapeCanvas;
         private GameObject m_PortraitCanvas;
 
         private bool m_Showing;
@@ -32,9 +32,9 @@ namespace UnityEngine.Advertisements
 
             var placeholderGameObject = new GameObject("Placeholder") { hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy };
             DontDestroyOnLoad(placeholderGameObject);
-            m_LandscapeCanvas = CreateCanvas(placeholderGameObject, "Canvas(Landscape)", 1600, 1200);
+            //m_LandscapeCanvas = CreateCanvas(placeholderGameObject, "Canvas(Landscape)", 1600, 1200);
             m_PortraitCanvas = CreateCanvas(placeholderGameObject, "Canvas(Portrait)", 1200, 1600);
-            CreatePlaceholder(m_LandscapeCanvas, m_LandscapeTexture, 1600, 1200);
+            //CreatePlaceholder(m_LandscapeCanvas, m_LandscapeTexture, 1600, 1200);
             CreatePlaceholder(m_PortraitCanvas, m_PortraitTexture, 1200, 1600);
         }
 
@@ -71,23 +71,23 @@ namespace UnityEngine.Advertisements
 
             if (allowSkip)
             {
-                ShowSkipButton(m_LandscapeCanvas);
+                //ShowSkipButton(m_LandscapeCanvas);
                 ShowSkipButton(m_PortraitCanvas);
             }
             else
             {
-                HideSkipButton(m_LandscapeCanvas);
+                //HideSkipButton(m_LandscapeCanvas);
                 HideSkipButton(m_PortraitCanvas);
             }
 
-            if (m_CurrentScreenOrientation == ScreenOrientation.LandscapeLeft)
+            /*if (m_CurrentScreenOrientation == ScreenOrientation.LandscapeLeft)
             {
                 m_LandscapeCanvas.SetActive(true);
             }
             else
-            {
+            {*/
                 m_PortraitCanvas.SetActive(true);
-            }
+            //}
         }
 
         private static GameObject CreateCanvas(GameObject parentGameObject, string gameObjectName, int width, int height)
@@ -120,14 +120,14 @@ namespace UnityEngine.Advertisements
 
             CreateButton(canvasGameObject, -100, -50, 150, 50, Vector2.one, Vector2.one, "Close", () => {
                 m_Showing = false;
-                m_LandscapeCanvas.SetActive(false);
+                //m_LandscapeCanvas.SetActive(false);
                 m_PortraitCanvas.SetActive(false);
                 OnFinish?.Invoke(this, new FinishEventArgs(m_PlacementId, ShowResult.Finished));
             });
 
             CreateButton(canvasGameObject, 100, -50, 150, 50, Vector2.up, Vector2.up, "Skip", () => {
                 m_Showing = false;
-                m_LandscapeCanvas.SetActive(false);
+                //m_LandscapeCanvas.SetActive(false);
                 m_PortraitCanvas.SetActive(false);
                 OnFinish?.Invoke(this, new FinishEventArgs(m_PlacementId, ShowResult.Skipped));
             });
@@ -185,14 +185,15 @@ namespace UnityEngine.Advertisements
 
         private void SwapCanvas(ScreenOrientation newOrientation)
         {
+
             if (newOrientation == ScreenOrientation.Portrait)
             {
-                m_LandscapeCanvas.SetActive(false);
+                //m_LandscapeCanvas.SetActive(false);
                 m_PortraitCanvas.SetActive(true);
             }
             else
             {
-                m_LandscapeCanvas.SetActive(true);
+                //m_LandscapeCanvas.SetActive(true);
                 m_PortraitCanvas.SetActive(false);
             }
         }
