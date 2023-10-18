@@ -23,7 +23,7 @@ public class build : MonoBehaviour
 
         //...
 
-        project.SetBuildProperty(project.ProjectGuid(), "ENABLE_BITCODE", "YES");
+        project.SetBuildProperty(project.ProjectGuid(), "ENABLE_BITCODE", "NO");
 
         //...
 
