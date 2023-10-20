@@ -64,6 +64,7 @@ public class snapScrollToItem : MonoBehaviour
 
     public static bool nextSnapIsDirectSnap = false;
     public static bool nextSnapIsGemSnap = false;
+    public static bool nextSnapIsDailyOfferSnap = false;
     private void SnapTo(RectTransform target)
     {
 
@@ -76,10 +77,18 @@ public class snapScrollToItem : MonoBehaviour
         if (nextSnapIsDirectSnap)
         {
             nextSnapIsDirectSnap = false;
-            if (!nextSnapIsGemSnap)
+
+            if(nextSnapIsGemSnap)
+                scrollDailyOffer.normalizedPosition = new Vector2(0, 0f);
+            else if(nextSnapIsDailyOfferSnap)
+                scrollDailyOffer.normalizedPosition = new Vector2(0, 1f);
+            else
+                contentPanel.anchoredPosition = pos + offset;
+
+            /*if (!nextSnapIsGemSnap)
                 contentPanel.anchoredPosition = pos + offset;
             else
-                scrollDailyOffer.normalizedPosition = new Vector2(0, 0f);
+                scrollDailyOffer.normalizedPosition = new Vector2(0, 0f);*/
             nextSnapIsGemSnap = false;
         }
         else

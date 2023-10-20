@@ -120,37 +120,24 @@ public class shopManager : MonoBehaviour
         dailyMenuGo.SetActive(false);
     }
 
-    public void btnMenuShop()
+    public void btnMenuShop(bool clickOnShopButton)
     {
-        //Debug.Log("Anim shop open, time : "+Time.time);
-
-        if (!managerNiveau.gameOn && !notifDefiDone.isAnimatingNotif)
-        {          
+        if (!managerNiveau.gameOn
+            && !notifDefiDone.isAnimatingNotif
+            && !notifInfinisUnlocked.isAnimating)
+        {
             menuShopOpen = true;
-            menuShop.gameObject.SetActive(true);
+                menuShop.gameObject.SetActive(true);
             boostManager.getInstance().reloadVoyantsBoost();
-
             doubleScroll.checkIfRebuildLayout(doubleScrollShop.currentIndexCentered);
-
-            /*if (boostManager.shouldBeRebuildWhenOpen)// && boostManager.getInstance().boostPan.activeInHierarchy)
-            {
-                boostManager.getInstance().rebuildLayout();
-                boostManager.shouldBeRebuildWhenOpen = false;
-            }
-
-            if(skinManager.shouldBeRebuildWhenOpen)// && skinManager.getInstance().skinPan.activeInHierarchy)
-            {
-                skinManager.getInstance().rebuildLayout();
-                skinManager.shouldBeRebuildWhenOpen = false;
-            }*/
-
-
             GetComponent<Animation>().Play("shop_open");
-
             sfxGame.getInstance().playSfx_listMainMenu(typeSfx_mainMenu.click_openMenu);
-            //sfxManager.getInstance().playSound_menuP(typeSound_menuP.btn_shopDefiInfinis);
-            //Debug.Log("2 Anim shop open, time : " + Time.time);
-            //performanceManager.instance.openSousMenuP();
+
+            if (clickOnShopButton && notifDailyReward.notifDailyOffer_isOn)
+            {
+                degradeScroll.clickVoyantGoldGem();
+                forceGoCurrencySection_onOpen(false, false, true);
+            }
         }
     }
 
@@ -187,7 +174,7 @@ public class shopManager : MonoBehaviour
     private void openCurrencyMenu(RectTransform toSnap, bool gem)
     {
         if (managerNiveau.gameOn
-            || notifDefiDone.isAnimatingNotif
+            || notifDefiDone.isAnimatingNotif || notifInfinisUnlocked.isAnimating
             || infoBoostManager.upgrading
             || rewardMenu.menuRewardOpen
             || openBoosterManager.boosterMenu_open
@@ -214,8 +201,15 @@ public class shopManager : MonoBehaviour
         degradeScroll.clickVoyantGoldGem();
 
         //SnapTo(toSnap);
-        btnMenuShop();
+        btnMenuShop(false);
 
+        forceGoCurrencySection_onOpen(!gem, gem, false);
+       
+        //SnapTo(toSnap);
+    }
+
+    private void forceGoCurrencySection_onOpen(bool line_coin, bool line_gem, bool line_dailyOffer)
+    {
         sfxGame.getInstance().playSfx_listMainMenu(typeSfx_mainMenu.click_openMenu);
         if (currentMenu != typeM.menu_piece)
         {
@@ -227,22 +221,24 @@ public class shopManager : MonoBehaviour
             btnMenuAnim[rangBtnMenuByType[currentMenu]].Play("btnMenuShopOff_noDelay");
             currentMenu = typeM.menu_piece;
         }
-        StartCoroutine(waitSnapToVoyant(gem));
-       
-        //SnapTo(toSnap);
+        StartCoroutine(waitSnapToVoyant(line_coin, line_gem, line_dailyOffer));
     }
 
-    private IEnumerator waitSnapToVoyant(bool gem)
+    public RectTransform posYOfferGemTr, posYOfferCoinTr, posYDailyOfferTr;
+    private IEnumerator waitSnapToVoyant(bool line_coin, bool line_gem, bool line_dailyOffer)
     {
         while (!posYOfferGemTr.gameObject.activeInHierarchy)
             yield return null;
-            snapScrollToItem.nextSnapIsDirectSnap = true;
-        snapScrollToItem.nextSnapIsGemSnap = gem;
-            snapScrollToItem.getInstance().snapToItem(typeSnapShop.snapOffer,
-                gem ? posYOfferGemTr.GetComponent<RectTransform>() : posYOfferCoinTr.GetComponent<RectTransform>());
+        snapScrollToItem.nextSnapIsDirectSnap = true;
+
+
+        snapScrollToItem.nextSnapIsGemSnap = line_gem;
+        snapScrollToItem.nextSnapIsDailyOfferSnap = line_dailyOffer;
+        RectTransform rT = line_coin ? posYOfferCoinTr : line_gem ? posYOfferGemTr : posYDailyOfferTr;
+        snapScrollToItem.getInstance().snapToItem(typeSnapShop.snapOffer, rT);
     }
 
-    public RectTransform posYOfferGemTr, posYOfferCoinTr;
+    
 }
 
 // 385 l -> 253 l

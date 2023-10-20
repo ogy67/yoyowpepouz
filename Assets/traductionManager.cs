@@ -250,7 +250,7 @@ public enum typeTraduction // tutoriels
     //tuto_UI_offer_infos,
     ui_info_modeExpert,
 
-
+    tuto_warningWaitAnim,
 }
 
 public enum typeLanguage

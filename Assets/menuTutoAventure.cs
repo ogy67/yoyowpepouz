@@ -213,9 +213,10 @@ public class menuTutoAventure : MonoBehaviour
         sfxGame.getInstance().playSfx_listMainMenu(typeSfx_mainMenu.click_openMenu);
     }
 
+    public detectorClickWhileTutoAnim detectorClickOnAnimGo;
     public Animation waitAnim_anim;
     public GameObject panLockAnimGo;
-    public Image progBar;
+    public Image progBar, progBar_2;
     public int offsetTimeAnim = 10;
     private bool animLocked = false;
     private IEnumerator lockAnim(typeTuto_tuto type)
@@ -223,20 +224,25 @@ public class menuTutoAventure : MonoBehaviour
         panLockAnimGo.SetActive(true);
         waitAnim_anim.Play("waitAnimEndOpen");
         animLocked = true;
+        detectorClickOnAnimGo.contentWarningSetOn();
 
         float timeAnim = (timeAnim_tuto[type] + offsetTimeAnim)/ 60f;
         float initTime = Time.time;
         progBar.fillAmount = 0f;
+        progBar_2.fillAmount = 0f;
         do
         {
             yield return null;
             progBar.fillAmount = 1 - ( (Time.time - initTime) / timeAnim );
+            progBar_2.fillAmount = 1 - ((Time.time - initTime) / timeAnim);
         } while (Time.time - initTime < timeAnim);
 
         waitAnim_anim.Play("waitAnimEndClose");
         animLocked = false;
 
         yield return new WaitForSeconds(30f / 60f);
+
+        detectorClickOnAnimGo.contentWarningSetOff();
         panLockAnimGo.SetActive(false);
 }
 }

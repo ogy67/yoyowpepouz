@@ -122,6 +122,7 @@ public class offreQuotidienne : MonoBehaviour
         return new infoOffre();
     }
 
+    public notifDailyReward notifDailyRew;
     private static bool dailyOfferIsAlreadyLoaded = false;
     private long prevTime;
     private const long oneDayTime = 24 * 60 * 60 * 1000;
@@ -176,6 +177,12 @@ public class offreQuotidienne : MonoBehaviour
                     setMenuOffers(false);
                     defiManager.getInstance().initDailyDefiTime(getTimeLeft_newOffer(), false);
 
+                    // ici, vient juste d'ouvrir app, reccup prevData dailyDefi, temps pas écoulé
+                    // si le defi quotidien n'est pas prit, activer notif
+                    if(offerTaken[payMode.free] == false)
+                    {
+                        notifDailyRew.setNotifOn();
+                    }
                 }
 
                 initDailyIsDone = true;
@@ -183,8 +190,8 @@ public class offreQuotidienne : MonoBehaviour
                 return;
             }
         }
-        //Debug.Log("Reload new daily offer");
-        // nouvelle offre
+        // ---- nouvelle offre
+
         dailyOfferIsAlreadyLoaded = true;
         prevTime = !firstInit ? getNewDate((long)t, dataTime) : dataTime;
         SaveSystem.Save(typeSave.SHOP_DAILY_DATE
@@ -194,9 +201,11 @@ public class offreQuotidienne : MonoBehaviour
         // on reload offer taken
         offerTaken = new Dictionary<payMode, bool>(offerTaken_const);
         SaveSystem.Save(typeSave.SHOP_DAILY_OFFER_TAKEN, offerTaken_const);
-        loadDailyOffer();
+        loadDailyOffer(firstInit);
         setMenuOffers(true);
         defiManager.getInstance().initDailyDefiTime(getTimeLeft_newOffer(), true);
+        notifDailyRew.setNotifOn();
+
         initDailyIsDone = true;
     }
 
@@ -425,7 +434,7 @@ public class offreQuotidienne : MonoBehaviour
     */
     #region creation de l'offre
     private int nbLoadDaily;
-    private void loadDailyOffer()
+    private void loadDailyOffer(bool firstLoad_forceFreeCoin)
     {
         previousDailyOffer_data = (Dictionary<typeOffre, sousTypeOffre>)SaveSystem.loadData(typeSave.SHOP_DAILY_OFFER);
         previousDaily_sousOffer = new List<sousTypeOffre>();
@@ -433,7 +442,7 @@ public class offreQuotidienne : MonoBehaviour
             previousDaily_sousOffer.Add(k.Value);
 
         nbLoadDaily = 0;
-        while (!loadOffers() && nbLoadDaily < 100) nbLoadDaily ++; // est mit a false si la generation de l'offre doit être refaite
+        while (!loadOffers(firstLoad_forceFreeCoin) && nbLoadDaily < 100) nbLoadDaily ++; // est mit a false si la generation de l'offre doit être refaite
 
         if (nbLoadDaily == 100)
             Debug.Log("<color=red>PROBLEME INIT DAILY OFFER, 20 générations</color>");
@@ -446,10 +455,23 @@ public class offreQuotidienne : MonoBehaviour
         SaveSystem.Save(typeSave.SHOP_DAILY_OFFER, currentDailyOffer);
     }
 
-    private bool loadOffers()
+    private bool loadOffers(bool firstLoad_forceFreeCoin)
     {
         currentDailyOffer = new Dictionary<typeOffre, sousTypeOffre>();
-        foreach (payMode pM in new payMode[] { payMode.free, payMode.yow, payMode.ad })
+
+        payMode[] pay;
+        if (firstLoad_forceFreeCoin)
+        {
+            // on set payModeFree ici
+            currentDailyOffer.Add(typeOffre.yow, sousTypeOffre.yow);
+            pay = new payMode[] { payMode.yow, payMode.ad };
+        }
+        else
+        {
+            pay = new payMode[] { payMode.free, payMode.yow, payMode.ad };
+        }
+
+        foreach (payMode pM in pay)
         {
             typeOffre o = getPrevDayOffer_byTypePay(_indexPayMode[pM]);
             if (!setOffer(o, pM))
@@ -526,6 +548,8 @@ public class offreQuotidienne : MonoBehaviour
     {
         offerTaken[pM] = true;
         SaveSystem.Save(typeSave.SHOP_DAILY_OFFER_TAKEN, offerTaken);
+        if (pM == payMode.free)
+            notifDailyRew.setNotifOff();
     }
 
     #endregion

@@ -248,10 +248,10 @@ public class paramManager : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
             Application.OpenURL("https://play.google.com/store/apps/details?id=com.DefaultCompany.Yoyow");
-        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        else// if (Application.platform == RuntimePlatform.IPhonePlayer)
             Application.OpenURL("itms-apps://itunes.apple.com/app/com.pepouz.yoyow");
-        else
-            Application.OpenURL("https://play.google.com/store/apps/details?id=com.DefaultCompany.Yoyow");
+        //else
+        //    Application.OpenURL("https://play.google.com/store/apps/details?id=com.DefaultCompany.Yoyow");
 
         sfxGame.getInstance().playSfx_listParamMenu(typeSfx_paramMenu.btn_simple);
         //sfxManager.getInstance().playSound_menuP(typeSound_menuP.btn_yT_socialMedia);

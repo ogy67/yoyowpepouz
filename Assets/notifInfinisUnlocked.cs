@@ -34,8 +34,10 @@ public class notifInfinisUnlocked : MonoBehaviour
     public float time_reloadNextNotif = 115f;
     public float timeWaitSoundNotif = 20f;
     public float timeDelayDefiNotif = 0.15f;
+    public static bool isAnimating = false;
     private IEnumerator animEnum()
     {
+        isAnimating = true;
         int idNotif = notifDefiDone.changeAnimNotifState(true, -1);
 
         yield return new WaitForSeconds(timeDelayDefiNotif);
@@ -48,5 +50,6 @@ public class notifInfinisUnlocked : MonoBehaviour
             (timeDelayDefiNotif + (timeWaitSoundNotif / 60f)); 
         yield return new WaitForSeconds(t_left);
         notifDefiDone.changeAnimNotifState(false, idNotif);
+        isAnimating = false;
     }
 }
