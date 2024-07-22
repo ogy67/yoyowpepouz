@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Projectile
+  - ObstaclePivot
+  - Obstacle
+  - ObstaclePivotRond
+  - Checkpoint
+  - Checkpoint_visee
+  - ObstacleBounce
+  - ObstaclePortal
+  - Player_ghost
+  - Aimant
+  - ghostTuto
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Post-Processing Volumes
+  - Water
+  - UI
+  - 
+  - 
+  - CheckP
+  - onlineLevel
+  - onlineLevel_2
+  - onlineLevel_3
+  - onlineLevel_4
+  - dottedLine
+  - player
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: trail
+    uniqueID: 2452901867
+    locked: 0
+  - name: other
+    uniqueID: 1601465441
+    locked: 0
+  - name: first
+    uniqueID: 191896077
+    locked: 0
